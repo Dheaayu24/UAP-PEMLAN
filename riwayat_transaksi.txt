@@ -4,3 +4,4 @@
 25-12-2025 19:19|Dhea|Es Teh|1|5000
 25-12-2025 19:19|Dhea|Kentang Goreng|1|10000
 25-12-2025 19:19|Dhea|Risoles|1|7000
+25-12-2025 22:32|kart|Nasi Goreng|2|30000

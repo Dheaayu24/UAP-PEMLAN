@@ -13,13 +13,11 @@ public class CafeQueueApp extends JFrame {
     private DefaultTableModel dataModel;
     private DefaultTableModel historyModel;
 
-    // ===== WARNA CAFE THEME =====
-    private final Color CREAM = new Color(245, 238, 224);   // background utama
-    private final Color COKLAT = new Color(111, 78, 55);    // coklat kopi
-    private final Color COKLAT_MUDA = new Color(181, 136, 99);
-    private final Color PUTIH = new Color(255, 250, 240);   // putih hangat
-    private final Color ABU = new Color(180, 170, 160);
-    private final Color HITAM = new Color(60, 40, 30);
+    // ===== WARNA CREAM THEME =====
+    private final Color CREAM = new Color(245, 238, 224);
+    private final Color PUTIH = Color.WHITE;
+    private final Color ABU = new Color(200, 200, 200);
+    private final Color HITAM = Color.DARK_GRAY;
 
     private static final String FILE_RIWAYAT = "riwayat_transaksi.txt";
 
@@ -63,10 +61,8 @@ public class CafeQueueApp extends JFrame {
 
         JButton btnLogin = new JButton("Login");
         btnLogin.setPreferredSize(new Dimension(120, 35));
-        btnLogin.setBackground(COKLAT);
-        btnLogin.setForeground(PUTIH);
-        btnLogin.setBorder(BorderFactory.createLineBorder(COKLAT_MUDA));
-
+        btnLogin.setBackground(PUTIH);
+        btnLogin.setBorder(BorderFactory.createLineBorder(ABU));
 
         // Username label
         gbc.gridx = 0; gbc.gridy = 0;
@@ -147,20 +143,23 @@ public class CafeQueueApp extends JFrame {
 
         JTable table = new JTable(dataModel);
         table.setRowHeight(26);
-        table.getTableHeader().setBackground(COKLAT);
+        table.setBackground(PUTIH);
+        table.setForeground(HITAM);
+        table.setGridColor(ABU);
+        table.getTableHeader().setBackground(PUTIH);
         table.getTableHeader().setForeground(HITAM);
 
         // ===== BUTTON PANEL =====
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnPanel.setBackground(CREAM);
 
-        JButton btnProses = new JButton("▶ Proses");
+        JButton btnProses = new JButton("▶️ Proses");
         JButton btnSelesai = new JButton("✔ Selesai");
         JButton backBtn = new JButton("⬅ Kembali");
 
         JButton[] buttons = {btnProses, btnSelesai, backBtn};
         for (JButton b : buttons) {
-            b.setBackground(COKLAT_MUDA);
+            b.setBackground(PUTIH);
             b.setForeground(HITAM);
             b.setBorder(BorderFactory.createLineBorder(ABU));
             b.setFocusPainted(false);
@@ -230,17 +229,8 @@ public class CafeQueueApp extends JFrame {
         formPanel.add(statusBox);
 
         JPanel menuPanel = new JPanel(new GridLayout(0, 1, 5, 5));
-        menuPanel.setBorder(
-                BorderFactory.createTitledBorder(
-                        BorderFactory.createLineBorder(COKLAT),
-                        "Pilih Menu",
-                        0,
-                        0,
-                        new Font("Segoe UI", Font.BOLD, 14),
-                        COKLAT
-                )
-        );
-
+        menuPanel.setBorder(BorderFactory.createTitledBorder("Pilih Menu"));
+        menuPanel.setBackground(CREAM);
 
         String[][] menuItems = {
                 {"Nasi Goreng", "15000", "Makanan Berat"},
@@ -264,15 +254,10 @@ public class CafeQueueApp extends JFrame {
                 new DefaultTableModel(new String[]{"Menu", "Harga", "Qty", "Sub Total"}, 0);
 
         JTable pesananTable = new JTable(pesananModel);
-
-// TAMBAHKAN INI ⬇⬇⬇
-        pesananTable.getTableHeader().setOpaque(true);
-        pesananTable.getTableHeader().setBackground(COKLAT_MUDA);
-        pesananTable.getTableHeader().setForeground(HITAM);
-        pesananTable.getTableHeader().setFont(
-                new Font("Segoe UI", Font.BOLD, 13)
-        );
-
+        pesananTable.setRowHeight(26);
+        pesananTable.setBackground(PUTIH);
+        pesananTable.setForeground(HITAM);
+        pesananTable.setGridColor(ABU);
 
         for (String[] item : menuItems) {
             JPanel row = new JPanel(new BorderLayout());
