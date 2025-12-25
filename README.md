@@ -1,99 +1,130 @@
-☕ Cafe Queue App
+☕ Sistem Antrian Pesanan Café
 
-Aplikasi Manajemen Antrian dan Pesanan Cafe Berbasis Java
+Aplikasi Sistem Antrian Pesanan Café merupakan aplikasi desktop berbasis Java Swing yang dikembangkan untuk membantu pengelolaan pesanan pelanggan secara terstruktur dan efisien. Aplikasi ini dibuat sebagai bagian dari Ujian Akhir Praktikum Mata Kuliah Pemrograman Lanjut.
 
- 📌 Gambaran Umum
+📌 Latar Belakang
 
-Cafe Queue App merupakan aplikasi desktop berbasis Java Swing yang digunakan untuk membantu pengelolaan antrian dan pesanan pada sebuah cafe.
-Aplikasi ini memungkinkan pencatatan pesanan pelanggan, pengelolaan status pesanan, serta penyimpanan riwayat transaksi secara terstruktur dan mudah digunakan.
+Pengelolaan pesanan café yang masih dilakukan secara manual berpotensi menimbulkan kesalahan pencatatan, ketidakteraturan antrian, serta kesulitan dalam rekap data transaksi. Oleh karena itu, aplikasi ini dikembangkan untuk mendukung proses pencatatan pesanan, pengelolaan status antrian, dan penyimpanan riwayat transaksi secara digital.
 
-Antarmuka aplikasi dirancang sederhana dengan tema warna lembut agar nyaman digunakan dalam operasional sehari-hari.
+🎯 Tujuan
 
- 🎯 Tujuan Aplikasi
+Aplikasi ini dibuat dengan tujuan:
 
-Aplikasi ini dikembangkan dengan tujuan:
+Mengimplementasikan konsep Object Oriented Programming (OOP)
 
-* Membantu proses pencatatan pesanan pelanggan
-* Mengelola alur antrian pesanan secara sistematis
-* Menyimpan data transaksi sebagai arsip
-* Mengimplementasikan konsep Java GUI dan file handling
+Menerapkan operasi CRUD (Create, Read, Update, Delete)
 
- ✨ Fitur Aplikasi
+Mengembangkan aplikasi desktop berbasis Java Swing (GUI)
 
-* Dashboard Utama
-  Menyediakan navigasi ke seluruh menu aplikasi.
+Mengelola data menggunakan file handling berbasis file teks
 
-* Input Pesanan
-  Pengguna dapat mengisi nama pelanggan, memilih menu makanan atau minuman, menentukan jumlah pesanan, serta melihat total pembayaran secara otomatis.
+Menerapkan event handling, validasi input, dan exception handling
 
-* Manajemen Antrian
-  Menampilkan daftar pesanan dengan status:
+🧩 Deskripsi Sistem
 
-  * Menunggu
-  * Diproses
-  * Selesai
+Aplikasi Sistem Antrian Pesanan Café menyediakan fitur:
 
-* Riwayat Transaksi
-  Menyimpan dan menampilkan data transaksi yang telah selesai diproses.
+Input pesanan pelanggan
 
-* Penyimpanan Data Lokal
-  Riwayat transaksi disimpan dalam file teks sehingga tetap tersedia saat aplikasi dijalankan kembali.
+Pengelolaan status pesanan (Menunggu, Diproses, Selesai)
 
-🧠 Konsep dan Cara Kerja
+Perhitungan total harga pesanan
 
-Setiap pesanan yang dimasukkan akan dicatat ke dalam sistem dan masuk ke daftar antrian.
-Pesanan diproses secara bertahap sesuai statusnya hingga selesai.
-Pesanan yang telah selesai akan otomatis dicatat ke dalam riwayat transaksi dan disimpan ke dalam file.
+Penyimpanan riwayat transaksi ke file teks
 
-🧩 Arsitektur Program
+Penampilan kembali data riwayat transaksi
 
-* Menggunakan satu class utama berbasis JFrame
-* Navigasi halaman menggunakan CardLayout
-* Pengelolaan data tabel menggunakan DefaultTableModel
-* Penyimpanan data dilakukan menggunakan mekanisme File I/O (.txt)
+🔄 Alur Sistem
 
- 🔄 Alur Penggunaan Aplikasi
+Pengguna membuka Dashboard
 
-1. Pengguna membuka aplikasi
-2. Memilih menu input pesanan
-3. Mengisi data pelanggan dan memilih menu
-4. Menyimpan pesanan
-5. Pesanan masuk ke daftar antrian
-6. Status pesanan diperbarui hingga selesai
-7. Data transaksi otomatis masuk ke riwayat
+Pengguna memilih menu:
 
- 📊 Contoh Penggunaan
+Daftar Pesanan
 
-Seorang pelanggan memesan beberapa menu makanan dan minuman.
-Pesanan dicatat oleh sistem, diproses sesuai urutan antrian, dan setelah selesai akan disimpan sebagai riwayat transaksi.
+Input Pesanan
 
- 🧪 Pengujian Dasar
+Riwayat Transaksi
 
-* Sistem menolak penyimpanan jika nama pelanggan kosong
-* Pesanan tidak dapat disimpan tanpa menu
-* Status pesanan hanya dapat diubah sesuai alur yang ditentukan
-* Data riwayat tetap tersedia meskipun aplikasi ditutup
+Data pesanan ditampilkan dalam tabel
 
- ⚠️ Batasan Sistem
+Status pesanan dapat diperbarui
 
-* Belum menggunakan database
-* Tidak mendukung penggunaan oleh banyak pengguna secara bersamaan
-* Belum tersedia fitur login atau otorisasi
-* Laporan belum dapat diekspor ke format lain
+Data transaksi disimpan ke file riwayat_transaksi.txt
 
- 🚀 Rencana Pengembangan
+🛠️ Implementasi Teknis
 
-* Integrasi database (MySQL / SQLite)
-* Penambahan fitur login admin
-* Pembuatan laporan transaksi
-* Ekspor data ke PDF atau Excel
-* Pengembangan ke versi web atau mobile
+Bahasa Pemrograman: Java
 
- ▶️ Cara Menjalankan Program
+GUI: Java Swing
 
-1. Pastikan Java Development Kit (JDK) sudah terpasang
-2. Buka project menggunakan IDE Java
-3. Jalankan file `CafeQueueApp.java`
-4. Aplikasi siap digunakan
+Layout: CardLayout
+
+Manajemen Data: DefaultTableModel
+
+File Handling: File teks (.txt)
+
+API: Java Date & SimpleDateFormat
+
+Exception Handling: try-catch (IOException)
+
+Class Utama
+
+CafeQueueApp
+Berfungsi sebagai frame utama sekaligus pengendali seluruh alur aplikasi.
+
+🧾 Implementasi CRUD
+
+Create: Menambahkan pesanan baru
+
+Read: Menampilkan daftar pesanan & riwayat transaksi
+
+Update: Mengubah status pesanan
+
+Delete: Menghapus atau mengurangi item pesanan
+
+💾 Penyimpanan Data
+
+Data riwayat transaksi disimpan secara permanen pada file:
+
+riwayat_transaksi.txt
 
 
+Data dipisahkan menggunakan tanda | agar mudah dibaca kembali.
+
+⚠️ Exception Handling
+
+Exception handling diterapkan untuk mencegah aplikasi crash saat terjadi error I/O pada proses baca dan tulis file.
+
+✅ Hasil Code Review
+
+Perbaikan yang dilakukan:
+
+Penambahan validasi input nama pelanggan
+
+Penambahan try-catch pada proses file handling
+
+📷 Tampilan Aplikasi
+
+Dashboard
+
+Daftar Pesanan
+
+Input Pesanan
+
+Tabel Pesanan & Total Harga
+
+Riwayat Transaksi
+
+👩‍🎓 Identitas Pengembang
+
+Nama: Dhea Ayu Angelia Putri
+NIM: 202410370110182
+Program Studi: Informatika
+Fakultas: Teknik
+Universitas: Universitas Muhammadiyah Malang
+Tahun: 2025
+
+📌 Kesimpulan
+
+Aplikasi Sistem Antrian Pesanan Café berhasil dikembangkan dengan menerapkan OOP, CRUD, GUI Java Swing, file handling, API Java, serta exception handling. Aplikasi ini mampu membantu pengelolaan pesanan café secara lebih sistematis dan efisien.
