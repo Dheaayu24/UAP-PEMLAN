@@ -13,7 +13,6 @@ public class CafeQueueApp extends JFrame {
     private DefaultTableModel dataModel;
     private DefaultTableModel historyModel;
 
-    // ===== WARNA CREAM THEME =====
     private final Color CREAM = new Color(245, 238, 224);
     private final Color PUTIH = Color.WHITE;
     private final Color ABU = new Color(200, 200, 200);
@@ -64,23 +63,18 @@ public class CafeQueueApp extends JFrame {
         btnLogin.setBackground(PUTIH);
         btnLogin.setBorder(BorderFactory.createLineBorder(ABU));
 
-        // Username label
         gbc.gridx = 0; gbc.gridy = 0;
         panel.add(lblUser, gbc);
 
-        // Username field
         gbc.gridx = 1;
         panel.add(tfUser, gbc);
 
-        // Password label
         gbc.gridx = 0; gbc.gridy = 1;
         panel.add(lblPass, gbc);
 
-        // Password field
         gbc.gridx = 1;
         panel.add(tfPass, gbc);
 
-        // Login button
         gbc.gridx = 1; gbc.gridy = 2;
         panel.add(btnLogin, gbc);
 
@@ -99,8 +93,6 @@ public class CafeQueueApp extends JFrame {
         return panel;
     }
 
-
-    // ================= Dashboard =================
     private JPanel buildDashboard() {
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(50, 200, 50, 200));
@@ -131,7 +123,6 @@ public class CafeQueueApp extends JFrame {
         return panel;
     }
 
-    // ================= List Data =================
     private JPanel buildListData() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(CREAM);
@@ -149,8 +140,7 @@ public class CafeQueueApp extends JFrame {
         table.getTableHeader().setBackground(PUTIH);
         table.getTableHeader().setForeground(HITAM);
 
-        // ===== BUTTON PANEL =====
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         btnPanel.setBackground(CREAM);
 
         JButton btnProses = new JButton("▶️ Proses");
@@ -165,7 +155,6 @@ public class CafeQueueApp extends JFrame {
             b.setFocusPainted(false);
         }
 
-        // ===== LOGIKA PROSES =====
         btnProses.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row == -1) {
@@ -182,7 +171,6 @@ public class CafeQueueApp extends JFrame {
             dataModel.setValueAt("Diproses", row, 4);
         });
 
-        // ===== LOGIKA SELESAI =====
         btnSelesai.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row == -1) {
@@ -211,7 +199,6 @@ public class CafeQueueApp extends JFrame {
         return panel;
     }
 
-    // ================= Input Form =================
     private JPanel buildInputForm() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(CREAM);
@@ -346,7 +333,7 @@ public class CafeQueueApp extends JFrame {
                 };
 
                 historyModel.addRow(row);
-                simpanRiwayatKeFile(row);
+                simpanUlangRiwayatKeFile();
 
             }
 
@@ -395,7 +382,6 @@ public class CafeQueueApp extends JFrame {
         return panel;
     }
 
-    // ================= History =================
     private JPanel buildHistoryPage() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(CREAM);
@@ -407,38 +393,58 @@ public class CafeQueueApp extends JFrame {
 
         JTable table = new JTable(historyModel);
         table.setRowHeight(26);
-        table.setBackground(PUTIH);
-        table.setForeground(HITAM);
-        table.setGridColor(ABU);
-        table.getTableHeader().setBackground(PUTIH);
-        table.getTableHeader().setForeground(HITAM);
 
+        JButton hapusBtn = new JButton("🗑 Hapus");
         JButton backBtn = new JButton("⬅ Kembali");
-        backBtn.setBackground(PUTIH);
-        backBtn.setForeground(HITAM);
-        backBtn.setBorder(BorderFactory.createLineBorder(ABU));
-        backBtn.setFocusPainted(false);
+
+        hapusBtn.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Pilih data yang mau dihapus!");
+                return;
+            }
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Yakin ingin menghapus riwayat ini?",
+                    "Konfirmasi",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                historyModel.removeRow(row);
+                simpanUlangRiwayatKeFile();
+            }
+        });
+
         backBtn.addActionListener(e -> cardLayout.show(mainPanel, "Dashboard"));
 
+        JPanel btnPanel = new JPanel();
+        btnPanel.add(hapusBtn);
+        btnPanel.add(backBtn);
+
         panel.add(new JScrollPane(table), BorderLayout.CENTER);
-        panel.add(backBtn, BorderLayout.SOUTH);
+        panel.add(btnPanel, BorderLayout.SOUTH);
         return panel;
     }
 
-    private void simpanRiwayatKeFile(Object[] data) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_RIWAYAT, true))) {
-            bw.write(
-                    data[0] + "|" +
-                            data[1] + "|" +
-                            data[2] + "|" +
-                            data[3] + "|" +
-                            data[4]
-            );
-            bw.newLine();
+    private void simpanUlangRiwayatKeFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_RIWAYAT))) {
+            for (int i = 0; i < historyModel.getRowCount(); i++) {
+                bw.write(
+                        historyModel.getValueAt(i, 0) + "|" +
+                                historyModel.getValueAt(i, 1) + "|" +
+                                historyModel.getValueAt(i, 2) + "|" +
+                                historyModel.getValueAt(i, 3) + "|" +
+                                historyModel.getValueAt(i, 4)
+                );
+                bw.newLine();
+            }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan riwayat ke file!");
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan ulang riwayat!");
         }
     }
+
 
     private void loadRiwayatDariFile() {
         File file = new File(FILE_RIWAYAT);
