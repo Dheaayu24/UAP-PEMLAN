@@ -13,11 +13,13 @@ public class CafeQueueApp extends JFrame {
     private DefaultTableModel dataModel;
     private DefaultTableModel historyModel;
 
-    // ===== WARNA CREAM THEME =====
-    private final Color CREAM = new Color(245, 238, 224);
-    private final Color PUTIH = Color.WHITE;
-    private final Color ABU = new Color(200, 200, 200);
-    private final Color HITAM = Color.DARK_GRAY;
+    // ===== WARNA CAFE THEME =====
+    private final Color CREAM = new Color(245, 238, 224);   // background utama
+    private final Color COKLAT = new Color(111, 78, 55);    // coklat kopi
+    private final Color COKLAT_MUDA = new Color(181, 136, 99);
+    private final Color PUTIH = new Color(255, 250, 240);   // putih hangat
+    private final Color ABU = new Color(180, 170, 160);
+    private final Color HITAM = new Color(60, 40, 30);
 
     private static final String FILE_RIWAYAT = "riwayat_transaksi.txt";
 
@@ -33,6 +35,7 @@ public class CafeQueueApp extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
+        mainPanel.add(buildLoginPage(), "Login");
         mainPanel.add(buildDashboard(), "Dashboard");
         mainPanel.add(buildListData(), "ListData");
         mainPanel.add(buildInputForm(), "InputForm");
@@ -40,9 +43,66 @@ public class CafeQueueApp extends JFrame {
 
         add(mainPanel);
         loadRiwayatDariFile();
-        cardLayout.show(mainPanel, "Dashboard");
+        cardLayout.show(mainPanel, "Login");
         setVisible(true);
     }
+
+    private JPanel buildLoginPage() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(CREAM);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.NONE;
+
+        JLabel lblUser = new JLabel("Username");
+        JTextField tfUser = new JTextField(15);
+
+        JLabel lblPass = new JLabel("Password");
+        JPasswordField tfPass = new JPasswordField(15);
+
+        JButton btnLogin = new JButton("Login");
+        btnLogin.setPreferredSize(new Dimension(120, 35));
+        btnLogin.setBackground(COKLAT);
+        btnLogin.setForeground(PUTIH);
+        btnLogin.setBorder(BorderFactory.createLineBorder(COKLAT_MUDA));
+
+
+        // Username label
+        gbc.gridx = 0; gbc.gridy = 0;
+        panel.add(lblUser, gbc);
+
+        // Username field
+        gbc.gridx = 1;
+        panel.add(tfUser, gbc);
+
+        // Password label
+        gbc.gridx = 0; gbc.gridy = 1;
+        panel.add(lblPass, gbc);
+
+        // Password field
+        gbc.gridx = 1;
+        panel.add(tfPass, gbc);
+
+        // Login button
+        gbc.gridx = 1; gbc.gridy = 2;
+        panel.add(btnLogin, gbc);
+
+        btnLogin.addActionListener(e -> {
+            String user = tfUser.getText();
+            String pass = new String(tfPass.getPassword());
+
+            if (user.equals("admin") && pass.equals("123")) {
+                JOptionPane.showMessageDialog(this, "Login berhasil");
+                cardLayout.show(mainPanel, "Dashboard");
+            } else {
+                JOptionPane.showMessageDialog(this, "Login gagal");
+            }
+        });
+
+        return panel;
+    }
+
 
     // ================= Dashboard =================
     private JPanel buildDashboard() {
@@ -87,14 +147,11 @@ public class CafeQueueApp extends JFrame {
 
         JTable table = new JTable(dataModel);
         table.setRowHeight(26);
-        table.setBackground(PUTIH);
-        table.setForeground(HITAM);
-        table.setGridColor(ABU);
-        table.getTableHeader().setBackground(PUTIH);
+        table.getTableHeader().setBackground(COKLAT);
         table.getTableHeader().setForeground(HITAM);
 
         // ===== BUTTON PANEL =====
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         btnPanel.setBackground(CREAM);
 
         JButton btnProses = new JButton("▶ Proses");
@@ -103,7 +160,7 @@ public class CafeQueueApp extends JFrame {
 
         JButton[] buttons = {btnProses, btnSelesai, backBtn};
         for (JButton b : buttons) {
-            b.setBackground(PUTIH);
+            b.setBackground(COKLAT_MUDA);
             b.setForeground(HITAM);
             b.setBorder(BorderFactory.createLineBorder(ABU));
             b.setFocusPainted(false);
@@ -173,8 +230,17 @@ public class CafeQueueApp extends JFrame {
         formPanel.add(statusBox);
 
         JPanel menuPanel = new JPanel(new GridLayout(0, 1, 5, 5));
-        menuPanel.setBorder(BorderFactory.createTitledBorder("Pilih Menu"));
-        menuPanel.setBackground(CREAM);
+        menuPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(COKLAT),
+                        "Pilih Menu",
+                        0,
+                        0,
+                        new Font("Segoe UI", Font.BOLD, 14),
+                        COKLAT
+                )
+        );
+
 
         String[][] menuItems = {
                 {"Nasi Goreng", "15000", "Makanan Berat"},
@@ -198,10 +264,15 @@ public class CafeQueueApp extends JFrame {
                 new DefaultTableModel(new String[]{"Menu", "Harga", "Qty", "Sub Total"}, 0);
 
         JTable pesananTable = new JTable(pesananModel);
-        pesananTable.setRowHeight(26);
-        pesananTable.setBackground(PUTIH);
-        pesananTable.setForeground(HITAM);
-        pesananTable.setGridColor(ABU);
+
+// TAMBAHKAN INI ⬇⬇⬇
+        pesananTable.getTableHeader().setOpaque(true);
+        pesananTable.getTableHeader().setBackground(COKLAT_MUDA);
+        pesananTable.getTableHeader().setForeground(HITAM);
+        pesananTable.getTableHeader().setFont(
+                new Font("Segoe UI", Font.BOLD, 13)
+        );
+
 
         for (String[] item : menuItems) {
             JPanel row = new JPanel(new BorderLayout());
